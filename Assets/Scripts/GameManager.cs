@@ -9,9 +9,13 @@ public class GameManager : MonoBehaviour {
 	private BoxCollider2D upWall;
 	private BoxCollider2D downWall;
 
+	public Transform player1;
+	public Transform player2;
+
 	// Use this for initialization
 	void Start () {
 		ResetWall();
+		ResetPlayer();
 	}
 	
 	// Update is called once per frame
@@ -46,5 +50,17 @@ public class GameManager : MonoBehaviour {
 
 		leftWall.transform.position = new Vector3(-tempPosition.x-0.5f,0,0);
 		leftWall.size = new Vector2(1,tempPosition.y*2);
+	}
+
+	void ResetPlayer()
+	{
+		Vector3 player1Position = Camera.main.ScreenToWorldPoint(new Vector2(100,Screen.height/2));
+		player1Position.z = 0;
+		player1.position = player1Position;
+
+
+		Vector3 player2Position = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width-100,Screen.height/2));
+		player2Position.z = 0;
+		player2.position = player2Position;
 	}
 }
