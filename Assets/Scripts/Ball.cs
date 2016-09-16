@@ -25,7 +25,35 @@ public class Ball : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		Vector2 velocity=rigidbody2D.velocity;
+
+		//防止player移动速度过慢导致ball移动速度过慢
+		if(velocity.x<9&&velocity.x>-9)
+		{
+			if(velocity.x>0)
+			{
+				velocity.x=10;
+			}
+			else
+			{
+				velocity.x=-10;
+			}
+			rigidbody2D.velocity = velocity;
+		}
+
+		//防止player移动速度过快导致ball移动速度过快
+		if(velocity.y>10||velocity.y<-10)
+		{
+			if(velocity.y>0)
+			{
+				velocity.y=10;
+			}
+			else
+			{
+				velocity.y=-10;
+			}
+			rigidbody2D.velocity = velocity;
+		}
 	}
 
 	void OnCollisionEnter2D( Collision2D coll)
@@ -37,5 +65,6 @@ public class Ball : MonoBehaviour {
 			rigidbody2D.velocity=velocity;
 
 		}	
+		Debug.Log(rigidbody2D.velocity);
 	}
 }
