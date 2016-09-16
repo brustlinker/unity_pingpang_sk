@@ -10,10 +10,12 @@ public class PlayerController : MonoBehaviour {
 
 
 	private Rigidbody2D rigid2d;
+	private AudioSource audio;
 
 	// Use this for initialization
 	void Start () {
 		rigid2d=this.GetComponent<Rigidbody2D>();
+		audio = this.GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -31,5 +33,11 @@ public class PlayerController : MonoBehaviour {
 		{
 			rigid2d.velocity=new Vector2(0,0);
 		}
+	}
+
+	void OnCollisionEnter2D()
+	{
+		audio.pitch = Random.Range(0.8f,1.0f);
+		audio.Play();
 	}
 }

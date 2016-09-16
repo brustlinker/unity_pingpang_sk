@@ -9,18 +9,8 @@ public class Ball : MonoBehaviour {
 	void Start () {
 
 		rigidbody2D=GetComponent<Rigidbody2D>();
+		GoBall();
 
-		//前闭后开区间，也就是说只会产生0，1
-		int number =Random.Range(0,2);
-
-		if(number == 1)
-		{
-			rigidbody2D.AddForce( new Vector2(100,0) );
-		}
-		else
-		{
-			rigidbody2D.AddForce( new Vector2(-100,0) );
-		}
 	}
 	
 	// Update is called once per frame
@@ -42,15 +32,15 @@ public class Ball : MonoBehaviour {
 		}
 
 		//防止player移动速度过快导致ball移动速度过快
-		if(velocity.y>10||velocity.y<-10)
+		if(velocity.y>8||velocity.y<-8)
 		{
 			if(velocity.y>0)
 			{
-				velocity.y=10;
+				velocity.y=8;
 			}
 			else
 			{
-				velocity.y=-10;
+				velocity.y=-8;
 			}
 			rigidbody2D.velocity = velocity;
 		}
@@ -66,5 +56,34 @@ public class Ball : MonoBehaviour {
 
 		}	
 		Debug.Log(rigidbody2D.velocity);
+
+		Debug.Log(coll.gameObject.tag);
+
+		if(coll.gameObject.name == "rightWall"||coll.gameObject.name == "leftWall")
+		{
+			GameManager.Instance.ChangeScore(coll.gameObject.name);
+		}
+	}
+
+
+	public void Reset()
+	{
+		transform.position = Vector3.zero;
+		GoBall();
+	}
+
+	void GoBall()
+	{
+		//前闭后开区间，也就是说只会产生0，1
+		int number =Random.Range(0,2);
+
+		if(number == 1)
+		{
+			rigidbody2D.AddForce( new Vector2(100,0) );
+		}
+		else
+		{
+			rigidbody2D.AddForce( new Vector2(-100,0) );
+		}
 	}
 }

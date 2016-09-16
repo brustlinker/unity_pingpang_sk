@@ -1,7 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
+
+	//单例模式
+	private static GameManager _instance;
+
+	public static GameManager Instance
+	{
+		get
+		{
+			return _instance;
+		}
+	}
+
+	void Awake()
+	{
+		_instance = this;
+	}
 
 
 	private BoxCollider2D rightWall;
@@ -11,6 +28,12 @@ public class GameManager : MonoBehaviour {
 
 	public Transform player1;
 	public Transform player2;
+
+	private int score1;
+	private int score2;
+
+	public Text score1Text;
+	public Text score2Text;
 
 	// Use this for initialization
 	void Start () {
@@ -62,5 +85,31 @@ public class GameManager : MonoBehaviour {
 		Vector3 player2Position = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width-100,Screen.height/2));
 		player2Position.z = 0;
 		player2.position = player2Position;
+	}
+
+
+	public void ChangeScore(string wallName)
+	{
+		if(wallName == "leftWall" )
+		{
+			score2++;
+		}
+		else if(wallName == "rightWall")
+		{
+			score1++;
+		}
+
+		score1Text.text=score1.ToString();
+		score2Text.text=score2.ToString();
+	}
+
+	public void Reset()
+	{
+		score1 = 0;
+		score2 = 0;
+		score1Text.text = score1.ToString();
+		score2Text.text = score2.ToString();
+
+		GameObject.Find("Ball").SendMessage("Reset");
 	}
 }
